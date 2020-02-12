@@ -1,0 +1,26 @@
+{
+  "name": "employeeTracker",
+  "version": "1.0.0",
+  "description": "Employee Tracker <h2>Unit 12 MySQL Homework: Employee Tracker</h2>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Angied521/employeeTracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Angied521/employeeTracker/issues"
+  },
+  "homepage": "https://github.com/Angied521/employeeTracker#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "express": "^4.17.1",
+    "inquirer": "^7.0.4",
+    "mysql": "^2.18.1"
+  }
+}
