@@ -1,6 +1,5 @@
 const mysql = require('mysql')
 const inquirer = require('inquirer')
-// const cTable = require('console.table')
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -12,8 +11,6 @@ const connection = mysql.createConnection({
 
 connection.connect(function (err) {
   if (err) throw err
-
-  // console.log('connected as id ' + connection.threadId)
   runSearch()
 })
 
@@ -29,12 +26,11 @@ function runSearch () {
       choices: [
         'View All Employees',
         'View Employees by Manager',
-        'View Employees by Department',
-        'View Emplyee by Role',
+        'View Department',
+        'View Employee by Role',
         'Add Employee',
         'Delete Employee',
         'Update Employee Role',
-        'Update Employee Manager',
         'EXIT']
 
     })
@@ -46,10 +42,10 @@ function runSearch () {
           break
 
         case 'View Employees by Manager':
-          managerSearch()
+          viewDepartment()
           break
 
-        case 'View Employees by Department':
+        case 'View Department':
           departmentSearch()
           break
 
@@ -72,7 +68,7 @@ function runSearch () {
     })
 }
 
-// all employee search
+// 'View All Employees':
 function employeeSearch () {
   var query = 'SELECT * FROM employee'
   connection.query(query, function (err, res) {
@@ -83,9 +79,9 @@ function employeeSearch () {
   })
 }
 
-// search by manager
-function managerSearch () {
-  connection.query('SELECT * FROM role WHERE title = "manager"', function (err, res) {
+// 'View Employees by Manager'
+function viewDepartment () {
+  connection.query('SELECT * FROM department', function (err, res) {
     if (err) throw err
     console.table(res)
 
@@ -93,13 +89,13 @@ function managerSearch () {
   })
 }
 
-// department search
+// 'View Department'
 function departmentSearch () {
   inquirer
     .prompt({
       type: 'list',
       name: 'choice',
-      message: 'View Employees by Department?',
+      message: 'View Department?',
       choices: ['Human Resources',
         'Accounting',
         'Marketing',
@@ -108,9 +104,11 @@ function departmentSearch () {
       ]
     })
     .then(function (answer) {
-      // const roleID = 'answer.choice'
+      // const roleID = 'answer.choices'
       // retreive id associated with role user chose
       // use id to search employee table that matches that role id
+
+      // connection.query(`SELECT * FROM department id WHERE id =  "${answer.choices})"`, function (err, res) {
       connection.query(`SELECT * FROM department WHERE name = "${answer.choices}"`, function (err, res) {
         if (err) throw err
         // for (var i = 0; i <res.length; i++) {
@@ -155,7 +153,7 @@ const addEmployee = () => {
   inquirer.prompt([
     {
       type: 'input',
-      message: 'what isvthe first name of the new employee?',
+      message: 'what is the first name of the new employee?',
       name: 'first_name'
     },
     {
